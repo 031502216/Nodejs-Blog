@@ -1,3 +1,28 @@
-body{
-    background: red;
+.clear {
+  clear: both;
+}
+.listBox{
+	margin-bottom: 30px;
+	padding: 10px 20px;
+	border-radius:10px;
+	border: 1px solid #ccc;
+	box-shadow: 5px 5px 5px #888888; 
+	word-wrap:break-word; /*自动换行*/
+}
+.listBox span{
+	float: right;
+	margin: 10px;
+	font-size: 15px;
+	line-height: 15px;
+	height: 15px;
+}
+span.input-group-addon{
+	background-color: #D9EDF7;
+	/*width: 200px;*/
+}
+.input-group span{
+	/*width: 38%;*/
+}
+.panel{
+	text-align: center;
 }
