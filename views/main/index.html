@@ -3,14 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<link rel="shortcut icon" type="image/x-icon" href="public/img/blogicon.png" />
     <link rel="stylesheet" href="public/css/main.css">
-    <link rel="stylesheet" href="public/css/bootstrap.min.css">
+	<link rel="stylesheet" href="public/css/bootstrap.min.css">
+	<script src="public/js/jquery.js"></script>
+	<script src="public/js/bootstrap.min.js"></script>
+	<script src="public/js/index.js"></script>
     <title>博客主页</title>
 </head>
 <body>
 	<header>
-		<img src="public/img/banner.jpg" width="100%" height="125px">
+		<img src="public/img/banner.jpg" width="100%" height="250px">
 	</header>
 	<nav class="navbar navbar-default" > 
 		<div class="navbar-header" style="margin:0 20px">
@@ -64,7 +68,7 @@
 				<!-- <div class="box admin">
 				</div> -->
 
-				<div class="panel panel-info" id="userInfo">
+				<div class="panel panel-info" id="userInfo" style="display:none;">
 				    <div class="panel-heading">
 				        <h3 class="panel-title">用户信息</h3>
 				    </div>
@@ -84,7 +88,8 @@
 				        <h3 class="panel-title">登陆</h3>
 				    </div>
 				    <div class="panel-body">
-				    	<form action="">
+				    	<form>
+							
 					     	<div class="input-group">
 						        <span class="input-group-addon">用户名</span>
 						        <input type="text" class="form-control">
@@ -93,52 +98,48 @@
 						        <span class="input-group-addon">密&nbsp&nbsp&nbsp码</span>
 						        <input type="password" class="form-control">
 						    </div><br>
-						    <button type="submit" class="btn btn-info">确认登陆</button>
-						    <span><a href="#" style="font-size: 12px;vertical-align: bottom;text-align: right;">马上注册</a></span>
+						    <button class="btn btn-info">确认登陆</button>
+						    <span><a href="javascript:;" style="font-size: 12px;vertical-align: bottom;text-align: right;">马上注册</a></span>
 						</form>
 				    </div>
 				</div>
 
-				<div class="panel panel-info" id="register">
+				<div class="panel panel-info" id="register" style="display:none">
 				    <div class="panel-heading">
 				        <h3 class="panel-title">注册</h3>
 				    </div>
 				    <div class="panel-body">
-				        <form action="">
+						<from> 
 					     	<div class="input-group">
 						        <span class="input-group-addon">&nbsp用&nbsp户&nbsp名</span>
-						        <input type="text" class="form-control">
+						        <input type="text" name="register_username" class="form-control">
 						    </div><br>
 						    <div class="input-group">
 						        <span class="input-group-addon">&nbsp密&nbsp&nbsp&nbsp&nbsp&nbsp码</span>
-						        <input type="password" class="form-control">
+						        <input type="password" name="register_password" class="form-control">
 						    </div><br>
 						    <div class="input-group">
 						        <span class="input-group-addon">确认密码</span>
-						        <input type="password" class="form-control">
+						        <input type="password" name="reregister_password" class="form-control">
 						    </div><br>
-						    <button type="submit" class="btn btn-info">确认注册</button>
-						    <span><a href="#" style="font-size: 12px;vertical-align: bottom;text-align: right;">马上登录</a></span>
-						</form>
-				    </div>
+						    <button class="btn btn-info">确认注册</button>
+						    <span><a href="javascript:;" style="font-size: 12px;vertical-align: bottom;text-align: right;">马上登录</a></span>
+						</from>
+					</div>
 				</div>
+				
 
 				<div class="panel panel-info" id="community">
-				    <div class="panel-heading">
-				        <h3 class="panel-title">社区</h3>
-				    </div>
-				    <div class="panel-body">
-				        <p><a href="http://www.zhihu.com">知乎</a></p>
-				        <p><a href="http://www.github.com">Github</a></p>
-				    </div>
+					<div class="panel-heading">
+						<h3 class="panel-title">社区</h3>
+					</div>
+					<div class="panel-body">
+						<p><a href="http://www.zhihu.com">知乎</a></p>
+						<p><a href="http://www.github.com">Github</a></p>
+					</div>
 				</div>
-
-			</div>
 		</div>
 	</div>
 
-<script src="public/js/index.js"></script>
-<script src="public/js/jquery.js"></script>
-<script src="public/js/bootstrap.min.js"></script>
 </body>
 </html>

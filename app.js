@@ -1,5 +1,7 @@
 //引入express模块
 var express = require('express');
+//引入body-parser - node.js 中间件，用于处理 JSON, Raw, Text 和 URL 编码的数据
+var bodyParser = require('body-parser');
 //引用swig模块
 var swig = require('swig');
 //引入数据库模块
@@ -20,6 +22,9 @@ app.set('views', __dirname + '/views');
 app.set('view engine', 'html'); 
 //关闭swig模板缓存
 swig.setDefaults({cache: false}); 
+
+//处理application/x-www-form-urlencoded格式请求体解析
+app.use(bodyParser.urlencoded({ extended: true }));
 
 //暂时用不到
 // app.get('/', function(req, res, next){
@@ -47,7 +52,7 @@ mongoose.createConnection('mongodb://localhost:27017/blog', function(err){
         console.log('连接成功');
         //连接成功以后监听端口
         app.listen(8888,function(){
-            console.log('success');
+            console.log('8888端口正在监听');
         });
     }
 })
