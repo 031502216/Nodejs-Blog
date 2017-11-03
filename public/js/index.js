@@ -20,7 +20,16 @@ $(function(){
                 repassword : $('#register').find('[name="reregister_password"]').val()
             },
             success : function(result){
-                console.log(result);
+                $('#register').find('.alert').find('p').html(result.message);
+                $('#register').find('.alert').removeClass('hide');
+                if(result.code == 0){
+                    $('#register').find('.alert').addClass('hide');
+                    setTimeout(function(){
+                        $('#login').show();
+                        $('#register').hide();
+                    },1000);
+                }
+                
             }
         });
     })

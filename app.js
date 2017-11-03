@@ -44,7 +44,8 @@ app.use('/admin', require('./routers/admin'));
 
 
 // 监听http请求
-mongoose.createConnection('mongodb://localhost:27017/blog', function(err){
+mongoose.Promise = global.Promise; 
+mongoose.connect('mongodb://localhost:27017/blog',{useMongoClient: true}, function(err){
     if(err){
         console.log('数据库连接失败');
     }
