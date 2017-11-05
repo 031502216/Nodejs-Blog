@@ -18,11 +18,8 @@
 }
 span.input-group-addon{
 	background-color: #D9EDF7;
-	/*width: 200px;*/
 }
-.input-group span{
-	/*width: 38%;*/
-}
+
 .panel{
 	text-align: center;
 }

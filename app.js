@@ -4,6 +4,8 @@ var express = require('express');
 var bodyParser = require('body-parser');
 //引用swig模块
 var swig = require('swig');
+//引入cookie获取模块
+var cookieParser = require('cookie-parser');
 //引入数据库模块
 var mongoose = require('mongoose');
 //创建app应用  =>  nodejs  http.createServer();
@@ -25,6 +27,10 @@ swig.setDefaults({cache: false});
 
 //处理application/x-www-form-urlencoded格式请求体解析
 app.use(bodyParser.urlencoded({ extended: true }));
+
+// 使用cookie-parser获取req.cookie
+app.use(cookieParser());
+
 
 //暂时用不到
 // app.get('/', function(req, res, next){

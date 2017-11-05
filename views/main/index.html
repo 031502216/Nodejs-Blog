@@ -67,21 +67,24 @@
 			<div class="col-md-4">
 				<!-- <div class="box admin">
 				</div> -->
-
-				<div class="panel panel-info" id="userInfo" style="display:none;">
+				{% if name %}
+				<div class="panel panel-info" id="userInfo">
 				    <div class="panel-heading">
 				        <h3 class="panel-title">用户信息</h3>
 				    </div>
 				    <div class="panel-body">
 				        <p>
-							亲爱的xx，你好！
+							亲爱的<span class="username" style="padding:5px;color:blue;">{{name}}</span>，你好！
 						</p>
+							
 						<p class="text-right" style="padding: 0;margin: 0;">
 							<span><a href="">管理账户</a></span>
-							<span><a href="">退出</a></span>
+							<span><a id="logout">退出</a></span>
 						</p>
 				    </div>
 				</div>
+
+				{% else  %}
 
 				<div class="panel panel-info" id="login">
 				    <div class="panel-heading">
@@ -89,18 +92,21 @@
 				    </div>
 				    <div class="panel-body">
 				    	<form>
+							<div class="alert alert-danger hide">
+								<p>警告：这里有一处警告！</p>
+							</div>
 					     	<div class="input-group">
 						        <span class="input-group-addon">用户名</span>
-						        <input type="text" class="form-control">
+						        <input type="text" name="login_username" class="form-control">
 						    </div><br>
 						    <div class="input-group">
 						        <span class="input-group-addon">密&nbsp&nbsp&nbsp码</span>
-						        <input type="password" class="form-control">
+						        <input type="password" name="login_password" class="form-control">
 						    </div><br>
-						    <button class="btn btn-info">确认登陆</button>
+						    <button type="button" class="btn btn-info">确认登陆</button>
 						    <span><a href="javascript:;" style="font-size: 12px;vertical-align: bottom;text-align: right;">马上注册</a></span>
 						</form>
-				    </div>
+					</div>
 				</div>
 
 				<div class="panel panel-info" id="register" style="display:none">
@@ -108,7 +114,7 @@
 				        <h3 class="panel-title">注册</h3>
 				    </div>
 				    <div class="panel-body">
-						<from> 
+						<form> 
 							<div class="alert alert-danger hide">
 								<p>警告：这里有一处警告！</p>
 							</div>
@@ -124,12 +130,12 @@
 						        <span class="input-group-addon">确认密码</span>
 						        <input type="password" name="reregister_password" class="form-control">
 						    </div><br>
-						    <button class="btn btn-info">确认注册</button>
+						    <button type="button" class="btn btn-info">确认注册</button>
 						    <span><a href="javascript:;" style="font-size: 12px;vertical-align: bottom;text-align: right;">马上登录</a></span>
-						</from>
+						</form>
 					</div>
 				</div>
-				
+				{% endif  %}
 
 				<div class="panel panel-info" id="community">
 					<div class="panel-heading">
