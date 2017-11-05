@@ -4,6 +4,8 @@ var express = require('express');
 var bodyParser = require('body-parser');
 //引用swig模块
 var swig = require('swig');
+//数据表模型
+var User = require('./models/User');  
 //引入cookie获取模块
 var cookieParser = require('cookie-parser');
 //引入数据库模块
@@ -30,6 +32,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // 使用cookie-parser获取req.cookie
 app.use(cookieParser());
+
+
 
 
 //暂时用不到
