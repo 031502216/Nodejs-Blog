@@ -1,0 +1,20 @@
+{% extends 'layout.html' %} 
+{%block main%}  
+<ol class="breadcrumb">
+    <li><a href="/admin">管理首页</a></li>
+    <li><span>分类添加</span></li>
+</ol>
+
+<h2>分类添加</h2>
+<form method="post" action="/admin/category/add">
+    <div class="form-group">
+        <label for="name">分类名称</label>
+        <input type="text" class="form-control" name="name" placeholder="请输入分类名">
+    </div>
+    <button type="submit" class="btn btn-default">提交</button>
+</form>
+
+
+{%endblock%}
+
+
