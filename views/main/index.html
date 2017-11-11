@@ -27,11 +27,9 @@
 		</div>
 		<div class="collapse navbar-collapse" id="navbar-collapse">
 			<ul class="nav navbar-nav">
-				<li><a href="javascript:;">HTML</a></li>
-				<li><a href="javascript:;">CSS</a></li>
-				<li><a href="javascript:;">JAVASCRIPT</a></li>
-				<li><a href="javascript:;">BOOTSTRAP</a></li>
-				<li><a href="javascript:;">NODEJS</a></li>
+				{% for category in categories%}
+				<li><a href="javascript:;">{{category.name}}</a></li>
+				{% endfor %}
 			</ul>
 		</div>
 	</nav>
