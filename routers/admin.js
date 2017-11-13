@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var User = require('../models/User');
 var Category = require('../models/Category');
+var Content = require('../models/Content');
 
 
 
@@ -140,73 +141,66 @@ router.get('/category/edit', function(req, res){
     });
 });
 
-//存储分类
+//修改储存分类
 router.post('/category/edit', function(req, res){
     var id = req.query.id || '';
     var name = req.body.name || '';
-    var flag = 0;
+
 
     Category.findOne({_id : id}).then(function(category){
         //输入的类名为空
         if(name == ''){
-            flag = 1;
             res.render('admin/error',{
                 name : req.cookies.name,
-                message : '没有输入分类名称',
+                message : '分类名不能为空',
                 url : '/admin/category'
             });
-            
         }
 
         if(!category){
-            flag = 1;
             res.render('admin/error',{
                 name : req.cookies.name,
                 message : '分类信息不存在',
                 url : '/admin/category'
             });
             
-        }else{
+        }else if( name == category.name){
             //分类信息没有任何修改
-            if( name == category.name){
-                flag = 1;
-                res.render('admin/success',{
-                    name : req.cookies.name,
-                    message : '分类修改成功',
-                    url : '/admin/category'
-                });
-                
-            }
+            res.render('admin/success',{
+                name : req.cookies.name,
+                message : '分类修改成功',
+                url : '/admin/category'
+            });
+            return;
+        
+        }else if(name != ''){
+            Category.findOne({
+                    _id : {$ne : id},  //_id 不等于 id
+                    name : name
+                }).then(function(sameCategory){
+                //如果没有找到
+        
+                if (sameCategory) {
+                res.render('admin/error',{
+                        name : req.cookies.name,
+                        message : '分类已经存在',
+                        url : '/admin/category'
+                    })
+                    return;
+                }  else  {
+                    res.render('admin/success', {
+                        name : req.cookies.name,
+                        message: '分类信息修改成功',
+                        url:'/admin/category'
+                    })
+                    // 更新数据
+                    return Category.update({_id : id},{name : name});
+                }
+            });
         }
         
     });
-    console.log('flag = ' + flag);
-    if(flag != 1)
-    {
-        Category.findOne({
-                _id : {$ne : id},  //_id 不等于 id
-                name : name
-            }).then(function(sameCategory){
-            if (sameCategory) {
-            res.render('admin/error',{
-                    name : req.cookies.name,
-                    message : '分类已经存在',
-                    url : '/admin/category'
-                })
-                return;
-            } else {
-                // 更新数据
-                return Category.update({_id : id},{name : name});
-            }
-        }).then(function(docs){
-            console.log('分类信息修改成功');
-            res.render('admin/success', {
-                name : req.cookies.name,
-                message: '分类信息修改成功',
-                url:'/admin/category'
-            })
-        });
-    }
+
     
 });
 
@@ -225,6 +219,192 @@ router.get('/category/delete', function(req, res){
     });
 });
 
+//展示内容
+router.get('/content', function(req, res){
+
+    var page = req.query.page || 1 ;
+    var limit = 5;
+
+    Content.count().then(function(count){
+
+        var pages = Math.ceil(count / limit);
+        page  = Math.max(page, 1);
+        page = Math.min(pages, page);
+        var skip = (page - 1) * limit;
+
+        //populate('category') 关联一个category分类的数据库
+        Content.find().sort({_id:-1}).limit(limit).skip(skip).populate('category').then(function(contents){
+
+            res.render('admin/content_index', {
+                name : req.cookies.name,
+                contents : contents,
+                count : count,
+                pages : pages,
+                page : page,
+                limit : limit
+            });
+        })    
+
+    })
+    
+});
+    
+    
+//分类添加页面展示,响应添加分类页面的请求
+router.get('/content/add', function(req, res){
+
+    Category.find().sort({_id:-1}).then(function(categories){
+        console.log(categories);
+        res.render('admin/content_add', {
+                name : req.cookies.name,
+                categories : categories
+            })
+    });
+    
+});
+
+//内容添加
+router.post('/content/add', function(req, res){
+    if(req.body.title == ''){
+        res.render('admin/error', {
+            name : req.cookies.name,
+            message : '内容标题不能为空'
+        })
+        return;
+    }
+    if(req.body.description == ''){
+        res.render('admin/error', {
+            name : req.cookies.name,
+            message : '内容描述不能为空'
+        })
+        return;
+    }
+    if(req.body.content == ''){
+        res.render('admin/error', {
+            name : req.cookies.name,
+            message : '内容不能为空'
+        })
+        return;
+    }
+
+    // 保存到数据库
+    new Content ({
+        category:req.body.category,
+        title:req.body.title,
+        description:req.body.description,
+        content:req.body.content
+    }).save().then(function(){
+        res.render('admin/success',{
+            name : req.cookies.name,
+            message : '内容添加成功',
+            url : '/admin/content'
+        });
+    })
+
+})
+
+//内容修改展示
+router.get('/content/edit', function(req, res){
+    var id = req.query.id || '';
+    var name = req.body.name || '';
+
+    
+    Category.find().sort({_id : -1}).then(function(categories){
+        var categories = categories;
+
+        Content.findOne({_id : id}).populate('category').then(function(content){
+            // console.log(content);
+            if(!content){
+                res.render('admin/error' ,{
+                    name : req.cookies.name,
+                    message : '查询的内容不存在',
+                    url : '/admin/content'
+                })
+            }else{
+                res.render('admin/content_edit',{
+                    name : req.cookies.name,
+                    content : content,
+                    categories : categories
+                })
+            }
+            
+        })
+
+    })
+
+    
+    
+
+});
+
+//内容修改提交
+router.post('/content/edit', function(req, res){
+    var id = req.query.id || '';
+
+    console.log("postid = "+id);
+
+    console.log(req.body);
+
+    if(req.body.category == ''){
+        res.render('admin/error',{
+            name : req.cookies.name,
+            message : '分类不能为空'
+        })
+        return;
+    }
+    else if(req.body.title == ''){
+        res.render('admin/error',{
+            name : req.cookies.name,
+            message : '标题不能为空',
+            url:'/admin/content/edit?id=' + id
+        })
+        return;
+    }
+    else if(req.body.description == ''){
+        res.render('admin/error',{
+            name : req.cookies.name,
+            message : '描述不能为空'
+        })
+        return;
+    }else if(req.body.content == ''){
+        res.render('admin/error',{
+            name : req.cookies.name,
+            message : '内容不能为空'
+        })
+        return;
+    }
+
+    
+    Content.update({_id : id}, {
+        category:req.body.category,
+        title:req.body.title,
+        description:req.body.description,
+        content:req.body.content
+    }).then(function(){
+        res.render('admin/success',{
+            name : req.cookies.name,
+            message : '修改成功',
+            url : '/admin/content'
+        })
+        return;
+    })
+
+});
+
+//删除分类
+router.get('/content/delete', function(req, res){
+    var id = req.query.id || '';
+
+    Content.remove({
+        _id : id
+    }).then(function(){
+        res.render('admin/success',{
+            name : req.body.name,
+            message : '内容删除成功',
+            url : '/admin/content'
+        });
+    });
+});
 
 
 module.exports = router;
