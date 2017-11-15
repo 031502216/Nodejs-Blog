@@ -10,6 +10,18 @@ module.exports = new mongoose.Schema({
         ref: 'Category'
     }, 
     title : String,
+    user : {
+        type : mongoose.Schema.Types.String,
+        ref : 'User'
+    },
+    addTime : {
+        type: Date,
+         default: Date.now
+    },
+    view : {
+        type : Number,
+        default : 0
+    },
     description : String,
     content : String
 });

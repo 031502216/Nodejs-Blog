@@ -235,6 +235,7 @@ router.get('/content', function(req, res){
         //populate('category') 关联一个category分类的数据库
         Content.find().sort({_id:-1}).limit(limit).skip(skip).populate('category').then(function(contents){
 
+            
             res.render('admin/content_index', {
                 name : req.cookies.name,
                 contents : contents,
@@ -291,6 +292,7 @@ router.post('/content/add', function(req, res){
     new Content ({
         category:req.body.category,
         title:req.body.title,
+        user:req.cookies.name,
         description:req.body.description,
         content:req.body.content
     }).save().then(function(){
@@ -391,7 +393,7 @@ router.post('/content/edit', function(req, res){
 
 });
 
-//删除分类
+//删除内容
 router.get('/content/delete', function(req, res){
     var id = req.query.id || '';
 
