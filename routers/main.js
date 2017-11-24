@@ -21,15 +21,22 @@ router.use(function(req, res, next){
 
 router.get('/', function(req, res, next){
 
-    
+    data.category = req.query.category || '';
     data.page = req.query.page || 1 ;
     data.limit = 5;
-    Content.count().then(function(count){
+    var where = {};
+
+    if (data.category){
+        where.category = data.category
+    }
+    // console.log('where = ' + where.category);
+
+    Content.where(where).count().then(function(count){
 
         data.count = count;
         data.pages = Math.ceil(data.count / data.limit);
-        data.page  = Math.max(data.page, 1);
         data.page = Math.min(data.pages, data.page);
+        data.page  = Math.max(data.page, 1);
         data.skip = (data.page - 1) * data.limit;
 
 
@@ -48,7 +55,7 @@ router.get('/', function(req, res, next){
         });
     
         //populate('category') 关联一个category分类的数据库
-        Content.find().sort({_id:-1}).limit(data.limit).skip(data.skip).populate('category').then(function(contents){
+        Content.where(where).find().sort({_id:-1}).limit(data.limit).skip(data.skip).populate('category').then(function(contents){
             data.contents = contents;
     
             res.render('main/index', data);  //name为渲染index需要的数据
@@ -58,5 +65,20 @@ router.get('/', function(req, res, next){
 
 
 });
+
+router.get('/view', function(req, res){
+    var contentId = req.query.contentId || '';
+
+    Content.findOne({
+        _id : contentId
+    }).then(function(content){
+        data.content = content;
+        content.view++;
+        content.save();
+        console.log(data.categories);
+        res.render('main/view', data);
+
+    })
+})
 
 module.exports = router;

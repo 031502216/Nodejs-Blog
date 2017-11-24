@@ -1,0 +1,17 @@
+{% extends 'layout.html' %} 
+{%block content%}
+<div class="col-md-8">
+	<div class="main">
+		<div style="text-align:center" class="listBox">
+			<h1>{{content.title}}</h1>
+			<p>{{content.content}}</p>
+			<span>评论数：10</span>
+			<span>阅读量：{{content.view}}</span>
+			<span>{{content.addTime|date('Y-m-d H:i:s', -8*60)}} </span>
+			<span>{{content.user}} 发布于</span>
+			<div class="clear"></div>   <!--清除浮动-->
+		</div>
+	</div>
+	
+</div>
+{%endblock%}

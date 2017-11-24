@@ -25,7 +25,7 @@ router.get('/user', function(req, res){
 
         User.find().limit(limit).skip(skip).then(function(users){
             //输出users信息
-            console.log(users);
+            // console.log(users);
 
             res.render('admin/user_index', {
                 name : req.cookies.name,
@@ -82,7 +82,7 @@ router.get('/category/add', function(req, res){
 router.post('/category/add', function(req, res){
 
     //输出post请求
-    console.log('name = ' + req.body.name);
+    // console.log('name = ' + req.body.name);
 
     var name = req.body.name || '';
 
@@ -255,7 +255,7 @@ router.get('/content', function(req, res){
 router.get('/content/add', function(req, res){
 
     Category.find().sort({_id:-1}).then(function(categories){
-        console.log(categories);
+        // console.log(categories);
         res.render('admin/content_add', {
                 name : req.cookies.name,
                 categories : categories
@@ -315,7 +315,7 @@ router.get('/content/edit', function(req, res){
         var categories = categories;
 
         Content.findOne({_id : id}).populate('category').then(function(content){
-            // console.log(content);
+            console.log(content);
             if(!content){
                 res.render('admin/error' ,{
                     name : req.cookies.name,
@@ -343,9 +343,9 @@ router.get('/content/edit', function(req, res){
 router.post('/content/edit', function(req, res){
     var id = req.query.id || '';
 
-    console.log("postid = "+id);
+    // console.log("postid = "+id);
 
-    console.log(req.body);
+    // console.log(req.body);
 
     if(req.body.category == ''){
         res.render('admin/error',{
