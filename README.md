@@ -9,16 +9,18 @@ NodeJS的搭建博客实践
 
 运行环境：node + npm + mongodb
 
-文件介绍：
-db                   ：数据库
-models               ：数据库模型
-node_modules         ：使用的npm包
-public               ：图片，html，css，js静态文件
-routers              ：路由
-schemas              ：数据库对象的集合
-views                ：渲染展示html文件
-app.js               ：程序入口
-package.json         ：npm包
+
+|  文件          |  介绍     |
+| :--------      | --------:|
+|db              |  数据库|
+|models          |  数据库模型|
+|node_modules    |  使用的npm包|
+|public          |  图片，html，css，js静态文件|
+|routers         |  路由|
+|schemas         |  数据库对象的集合|
+|views           |  渲染展示html文件|
+|app.js          |  程序入口|
+|package.json    |  npm包|
 
 本次搭建博客博客实践是基于网易云课堂的nodejs系列教程
 [网易云](http://study.163.com/course/courseMain.htm?courseId=1003675016)
