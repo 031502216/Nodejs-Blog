@@ -6,7 +6,7 @@
 		<div class="listBox">
 			<h2>{{content.title}}</h2>
 			<p>{{content.description}}</p>
-			<button class="btn btn-info btn-md"><a style="color:aliceblue;"  href="/view?contentId={{content.id}}">阅读原文</a></button>
+			<a style="color:aliceblue;"  href="/view?contentId={{content.id}}"><button class="btn btn-info btn-md">阅读原文</button></a>
 			<span>评论数：10</span>
 			<span>阅读量：{{content.view}}</span>
 			<span>{{content.addTime|date('Y-m-d H:i:s', -8*60)}} </span>
